@@ -55,7 +55,10 @@ public class ServletMailProcess extends HttpServlet {
                 sendEmail(addr, title, content);
             }
         } else if (action.equals("savesend")) {
-
+            for (String addr : addrs
+                    ) {
+                sendEmail(addr, title, content);
+            }
         } else if (action.equals("sendlast")) {
 
         }
@@ -68,7 +71,7 @@ public class ServletMailProcess extends HttpServlet {
 // 收件人电子邮箱
         String to = userEmail;
 // 发件人电子邮箱 这里使用学校邮箱
-        String from = "151250095@smail.nju.edu.cn";
+        String from = "mail@arloor.com";
 // 指定发送邮件的主机为 smtp.exmail.qq.com
         String host = "smtp.exmail.qq.com"; //QQ 邮件服务器
 // 获取系统属性
@@ -79,7 +82,7 @@ public class ServletMailProcess extends HttpServlet {
 // 获取默认session对象
         Session session = Session.getDefaultInstance(properties, new Authenticator() {
             public PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("151250095@smail.nju.edu.cn", "!@QWqw426543"); //发件人邮件用户名、密码
+                return new PasswordAuthentication("mail@arloor.com", "Mailsender426543"); //发件人邮件用户名、密码
             }
         });
         try {
@@ -216,7 +219,7 @@ public class ServletMailProcess extends HttpServlet {
                         "                                                                    <em>Copyright @ 2017 arloor.com, All rights reserved.</em>\n" +
                         "                                                                    <br>\n" +
                         "                                                                    <strong>Our mailing address is:</strong><br>\n" +
-                        "                                                                    151250095@smail.nju.edu.cn\n" +
+                        "                                                                    mail@arloor.com\n" +
                         "                                                                    <br>\n" +
                         "                                                                    <br>\n" +
                         "                                                                </td>\n" +
