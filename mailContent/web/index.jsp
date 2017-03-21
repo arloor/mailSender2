@@ -23,33 +23,99 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="js/bootstrap.min.js"></script>
 
+<div class="container">
+  <div class="row col-md-4 col-md-offset-4">
+    <h2>在此添加内容元素</h2>
+  </div>
+  <div class="row col-md-4 col-md-offset-4">
+
+    <div class="col-xs-4 col-md-4 ">
+      <button class="form-control" onclick="addTitle()" style="padding: 0px 0px;">添加标题</button>
+    </div>
+    <div class="col-xs-4 col-md-4 ">
+      <button class="form-control" onclick="addP()" style="padding: 0px 0px;">添加段落</button>
+    </div>
+    <div class=" col-xs-4 col-md-4 ">
+      <button class="form-control" onclick="addImg()" style="padding: 0px 0px;">添加图片</button>
+    </div>
+  </div>
+</div>
+
 <div class="header container">
   <div class="row">
     <div class="col-md-offset-4 col-md-4">
-      <h1>发送邮件</h1>
+
     </div>
   </div>
 </div>
 <div class="mail_set container">
   <div class="row">
     <div class="col-md-offset-4 col-md-4">
-      <form class="form-group" method="post" action="/mail/MailProcess">
+      <form class="form-horizontal" method="post" action="/mail/MailProcess">
+
+
+        <div class="form-group" class="row">
+          <div class="col-md-12" id="content">
+          </div>
+        </div>
+
+        <h2>设置邮件信息</h2>
         <label for="to">邮件接收人</label>
         <input id="to" name="to" type="text" class="form-control">
 
         <label for="title">标题</label>
         <input id="title" name="title" type="text" class="form-control">
 
-        <label for="p-content">内容</label>
-        <textarea id="p-content" name="content" class="form-control" rows="18"></textarea>
+        <div class="col-md-6 col-xs-6">
+          <input type="radio" name="withWeather" value="yes" checked>显示天气
+        </div>
+        <div class="col-md-6  col-xs-6 ">
+          <input type="radio" name="withWeather" value="no">不显示天气
+        </div>
 
-        <br>
-        <input type="submit" value="发送" class="form-control">
+        <label class="col-xs-3 col-md-3" style="padding-left: 0px">内容个数</label>
+        <input class="col-xs-9 col-md-9" id="numOfCon" name="num" style="padding-left: 0px; padding-right: 0px"
+               value="0">
+
+
+        <input type="radio" name="action" value="save" checked>保存
+        <input type="radio" name="action" value="send">发送
+        <input type="radio" name="action" value="savesend">保存并发送
+        <input type="radio" name="action" value="sendlast">发送上一版本
+
+        <input type="submit" value="确定" class="form-control">
       </form>
 
     </div>
   </div>
 </div>
+
+<script>
+    var num = 0;
+    function addTitle() {
+        document.getElementById("content").innerHTML += '<label>副标题</label>' +
+            '<input type="text" name="content' + num + '" class="form-control" value="<h>">';
+        num++;
+        setNum();
+    }
+    function addP() {
+        document.getElementById("content").innerHTML += '<label>段落</label>' +
+            '<textarea rows="8" name="content' + num + '" class="form-control"></textarea>';
+        num++;
+        setNum();
+    }
+    function addImg() {
+        document.getElementById("content").innerHTML += '<label>图片url</label>' +
+            '<input type="url"  name="content' + num + '" class="form-control" >';
+        num++;
+        setNum();
+    }
+
+    function setNum() {
+        document.getElementById("numOfCon").value = num;
+    }
+
+</script>
 
 
 </body>

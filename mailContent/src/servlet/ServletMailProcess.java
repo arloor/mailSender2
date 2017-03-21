@@ -1,5 +1,7 @@
 package servlet;
 
+import helper.WeatherGetter;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -9,33 +11,57 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Properties;
 
 /**
- * Created by arloor on 2017/3/15.
+ * Created by arloor on 2017/3/21.
  */
 public class ServletMailProcess extends HttpServlet {
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");//必须设置request的编码
         response.setContentType("text/html;charset=UTF-8");//这个也是必须的
-        response.setHeader("","");
-        /*
 
-        out.print(request.getParameter("title"));
-        */
+        String action = request.getParameter("action");
         String to=request.getParameter("to");
         String title=request.getParameter("title");
-        String rawContent=request.getParameter("content");
+        int contentNum = Integer.parseInt(request.getParameter("num"));
+        String withWeather = request.getParameter("withWeather");
+        String[] addrs = to.split(";");
+        boolean boolWithWeather = false;
 
-        String content=createHtmlEmailContent(title,rawContent);
-        sendEmail(to,title,content);
+        if (withWeather.equals("yes")) {
+            boolWithWeather = true;
+        }
 
-        PrintWriter out=response.getWriter();
-        out.print(content);
-    }
+        ArrayList<String> contentList = new ArrayList<>();
+        for (int i = 0; i < contentNum; i++) {
+            contentList.add(request.getParameter("content" + i));
+        }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String content = createHtmlEmailContent(title, boolWithWeather, contentList);
 
+
+        PrintWriter writer = response.getWriter();
+
+        writer.print("当前选中的操作是: " + action);
+
+        if (action.equals("save")) {
+
+        } else if (action.equals("send")) {
+            for (String addr : addrs
+                    ) {
+                sendEmail(addr, title, content);
+            }
+        } else if (action.equals("savesend")) {
+
+        } else if (action.equals("sendlast")) {
+
+        }
+
+
+        writer.print(content);
     }
 
     public static void sendEmail(String userEmail,String theme,String content) {
@@ -77,9 +103,8 @@ public class ServletMailProcess extends HttpServlet {
         }
     }
 
-    public static String createHtmlEmailContent(String title,String rawContent){
+    private String createHtmlEmailContent(String title, boolean withWeather, ArrayList<String> contentList) {
         StringBuilder content=new StringBuilder();
-
         content.append("<!doctype html>\n" +
                 "<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\">\n" +
                 "<head>\n" +
@@ -130,22 +155,31 @@ public class ServletMailProcess extends HttpServlet {
                 "                                                                            <td  valign=\"top\" class=\"mcnTextContent\" style=\"padding-top:40px; padding-right:18px; padding-bottom:9px; padding-left:18px;\">\n");
 
 
+        if (withWeather == true) {
 
+            ArrayList<String> weathers = new WeatherGetter().getWeathers();
 
+            content.append("                                                                <ul >\n");
+            for (String cell : weathers
+                    ) {
+                content.append("                                                                <li style=\"font-family: Consolas; font-size: 20px;text-align: center;line-height:200%;\"><h3>" +
+                        cell +
+                        "</h3></li>\n" +
+                        "                                                                                    ");
+            }
+            content.append("                                                                </ul><br/><br/><br/><br/><hr>\n");
+        }
 
         content.append("<!-- 特殊日子追加内容的模板2 使用h3标签 -->\n" +
                 "<div style=\"font-family: Consolas; font-size: 20px;text-align: left;line-height:200%;\">");
-        String[] strings=rawContent.split("\n");
-        for (String cell:strings
+        for (String cell : contentList
                 ) {
-            if(!cell.startsWith("<image>")){
-                content.append("<h3>"
-                        +cell
-                        +"</h3>");
-            }else{
-                content.append("<img src=\""+cell.substring(7)+"\" width=\"414\" alt=\"图片显示失败\">");
-                System.out.println(cell.substring(7));
-            }
+            if (cell.startsWith("http")) {
+                content.append("<img src=\"" + cell + "\" width=\"414\" alt=\"图片显示失败\">");
+                System.out.println("加载图片url:" + cell);
+            } else if (cell.startsWith("<h>")) {
+                content.append("<p align=\"center\" style=\"font-size: xx-large\">" + cell.substring(3) + "</p>");
+            } else content.append("<h3>" + cell + "</h3>");
         }
 
         content.append("</div>");
@@ -208,6 +242,4 @@ public class ServletMailProcess extends HttpServlet {
 
         return content.toString();
     }
-
 }
-

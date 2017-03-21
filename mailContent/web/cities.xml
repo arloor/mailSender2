@@ -1,0 +1,14 @@
+<cities>
+    <city>
+        <name>南京</name>
+        <url>http://www.weather.com.cn/weather/101190101.shtml</url>
+    </city>
+    <city>
+        <name>颍上</name>
+        <url>http://www.weather.com.cn/weather/101220803.shtml</url>
+    </city>
+    <city>
+        <name>溧阳</name>
+        <url>http://www.weather.com.cn/weather/101191102.shtml</url>
+    </city>
+</cities>
