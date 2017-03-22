@@ -23,7 +23,7 @@ public class DailyWeatherMail {
 
         for (Map.Entry<String, String> cell : emailThemeMap.entrySet()
                 ) {
-            javaMail.sendEmail(cell.getKey(), cell.getValue(), lastContent);
+            javaMail.sendEmail(cell.getKey(), mailMessageVO.getTitle(), lastContent);
         }
     }
 }
