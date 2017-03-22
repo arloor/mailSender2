@@ -78,9 +78,8 @@
         <input id="title" name="title" type="text" class="form-control">
 
 
-
-        <label class="col-xs-3 col-md-3" style="padding-left: 0px">内容个数</label>
-        <input class="col-xs-9 col-md-9" id="numOfCon" name="num" style="padding-left: 0px; padding-right: 0px"
+          <input class="col-xs-9 col-md-9" id="numOfCon" name="num"
+                 style="display: none;padding-left: 0px; padding-right: 0px"
                value="0" readonly>
 
 
