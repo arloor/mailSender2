@@ -23,7 +23,7 @@ public class WeatherGetter {
 
     public ArrayList<String> getWeathers() {
         String urlXml = "../webapps/mail/cities.xml";
-        Map<String, String> urls = getUrlsByXml(urlXml);
+        Map<String, String> urls = new DataHelper().getUrlsByMysql();
 
 
         ArrayList<String> weathers = new ArrayList<String>();

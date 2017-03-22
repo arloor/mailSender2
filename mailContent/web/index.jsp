@@ -30,7 +30,7 @@
   <div class="row col-md-4 col-md-offset-4">
 
     <div class="col-xs-4 col-md-4 ">
-      <button class="form-control" onclick="addTitle()" style="padding: 0px 0px;">添加标题</button>
+      <button class="form-control" onclick="addTitle()" style="padding: 0px 0px;">添加副标题</button>
     </div>
     <div class="col-xs-4 col-md-4 ">
       <button class="form-control" onclick="addP()" style="padding: 0px 0px;">添加段落</button>
@@ -75,13 +75,15 @@
 
         <label class="col-xs-3 col-md-3" style="padding-left: 0px">内容个数</label>
         <input class="col-xs-9 col-md-9" id="numOfCon" name="num" style="padding-left: 0px; padding-right: 0px"
-               value="0">
+               value="0" readonly>
 
 
         <input type="radio" name="action" value="save" checked>保存
         <input type="radio" name="action" value="send">发送
         <input type="radio" name="action" value="savesend">保存并发送
+        <input type="radio" name="action" value="viewlast">查看上一版本
         <input type="radio" name="action" value="sendlast">发送上一版本
+
 
         <input type="submit" value="确定" class="form-control">
       </form>

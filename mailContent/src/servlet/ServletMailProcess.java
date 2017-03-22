@@ -1,6 +1,8 @@
 package servlet;
 
+import helper.DataHelper;
 import helper.WeatherGetter;
+import vo.MailMessageVO;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -22,6 +24,9 @@ public class ServletMailProcess extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");//必须设置request的编码
         response.setContentType("text/html;charset=UTF-8");//这个也是必须的
+
+
+        DataHelper dataHelper = new DataHelper();
 
         String action = request.getParameter("action");
         String to=request.getParameter("to");
@@ -48,23 +53,52 @@ public class ServletMailProcess extends HttpServlet {
         writer.print("当前选中的操作是: " + action);
 
         if (action.equals("save")) {
-
+            String contentBeforeWeather = createHtmlBeforeWeather(title);
+            String contentAfterWeather = createHtmlAfterWeather(contentList);
+            dataHelper.saveMailContent(title, to, contentBeforeWeather, boolWithWeather, contentAfterWeather);
+            writer.print(content);
         } else if (action.equals("send")) {
             for (String addr : addrs
                     ) {
                 sendEmail(addr, title, content);
             }
+            writer.print(content);
         } else if (action.equals("savesend")) {
+            String contentBeforeWeather = createHtmlBeforeWeather(title);
+            String contentAfterWeather = createHtmlAfterWeather(contentList);
+            dataHelper.saveMailContent(title, to, contentBeforeWeather, boolWithWeather, contentAfterWeather);
             for (String addr : addrs
                     ) {
                 sendEmail(addr, title, content);
             }
-        } else if (action.equals("sendlast")) {
+            writer.print(content);
+        } else if (action.equals("viewlast")) {
+            MailMessageVO mailMessageVO = dataHelper.getLastMailContent();
 
+            if (mailMessageVO.getIntWithWeather() == 1) {
+                boolWithWeather = true;
+            } else boolWithWeather = false;
+            String lastContent = mailMessageVO.getContentBeforeWeather() + createWeatherContent(boolWithWeather) + mailMessageVO.getContentAfterWeather();
+            writer.write(lastContent);
+        } else if (action.equals("sendlast")) {
+            MailMessageVO mailMessageVO = dataHelper.getLastMailContent();
+
+            if (mailMessageVO.getIntWithWeather() == 1) {
+                boolWithWeather = true;
+            } else boolWithWeather = false;
+            String lastContent = mailMessageVO.getContentBeforeWeather() + createWeatherContent(boolWithWeather) + mailMessageVO.getContentAfterWeather();
+
+            String[] lastAddrs = mailMessageVO.getAddrs();
+
+            for (String addr : lastAddrs
+                    ) {
+                sendEmail(addr, mailMessageVO.getTitle(), lastContent);
+            }
+            writer.write(lastContent);
         }
 
 
-        writer.print(content);
+
     }
 
     public static void sendEmail(String userEmail,String theme,String content) {
@@ -107,14 +141,45 @@ public class ServletMailProcess extends HttpServlet {
     }
 
     private String createHtmlEmailContent(String title, boolean withWeather, ArrayList<String> contentList) {
-        StringBuilder content=new StringBuilder();
+        StringBuffer content = new StringBuffer();
+        content.append(createHtmlBeforeWeather(title));
+
+
+        content.append(createWeatherContent(withWeather));
+
+
+        content.append(createHtmlAfterWeather(contentList));
+        return content.toString();
+    }
+
+    private String createWeatherContent(boolean withWeather) {
+        if (withWeather == true) {
+            StringBuffer content = new StringBuffer();
+            ArrayList<String> weathers = new WeatherGetter().getWeathers();
+
+            content.append("                                                                <ul >\n");
+            for (String cell : weathers
+                    ) {
+                content.append("                                                                <li style=\"font-family: Consolas; font-size: 20px;text-align: center;line-height:200%;\"><h3>" +
+                        cell +
+                        "</h3></li>\n" +
+                        "                                                                                    ");
+            }
+            content.append("                                                                </ul><br/><br/><br/><br/><hr>\n");
+            return content.toString();
+        } else return "";
+
+    }
+
+    private String createHtmlBeforeWeather(String title) {
+        StringBuilder content = new StringBuilder();
         content.append("<!doctype html>\n" +
                 "<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\">\n" +
                 "<head>\n" +
                 "    <meta charset=\"UTF-8\">\n" +
                 "    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n" +
                 "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
-                "    <title>Title</title>\n" +
+                "    <title>" + title + "</title>\n" +
                 "</head>\n" +
                 "<body>\n" +
                 "    <center>\n" +
@@ -134,7 +199,7 @@ public class ServletMailProcess extends HttpServlet {
                 "\n" +
                 "                                        <td valign=\"top\" class=\"mcnTextContent\" style=\"padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;\">\n" +
                 "\n" +
-                "                                            <h1 style=\"font-family:Courier New;color: antiquewhite\">"+title+"</h1>\n" +
+                "                                            <h1 style=\"font-family:Courier New;color: antiquewhite\">" + title + "</h1>\n" +
                 "                                            <h4 style=\"font-family:Courier New;color: antiquewhite\">love my love</h4>\n" +
                 "\n" +
                 "                                    </tr>\n" +
@@ -158,21 +223,11 @@ public class ServletMailProcess extends HttpServlet {
                 "                                                                            <td  valign=\"top\" class=\"mcnTextContent\" style=\"padding-top:40px; padding-right:18px; padding-bottom:9px; padding-left:18px;\">\n");
 
 
-        if (withWeather == true) {
+        return content.toString();
+    }
 
-            ArrayList<String> weathers = new WeatherGetter().getWeathers();
-
-            content.append("                                                                <ul >\n");
-            for (String cell : weathers
-                    ) {
-                content.append("                                                                <li style=\"font-family: Consolas; font-size: 20px;text-align: center;line-height:200%;\"><h3>" +
-                        cell +
-                        "</h3></li>\n" +
-                        "                                                                                    ");
-            }
-            content.append("                                                                </ul><br/><br/><br/><br/><hr>\n");
-        }
-
+    private String createHtmlAfterWeather(ArrayList<String> contentList) {
+        StringBuffer content = new StringBuffer();
         content.append("<!-- 特殊日子追加内容的模板2 使用h3标签 -->\n" +
                 "<div style=\"font-family: Consolas; font-size: 20px;text-align: left;line-height:200%;\">");
         for (String cell : contentList
@@ -186,7 +241,6 @@ public class ServletMailProcess extends HttpServlet {
         }
 
         content.append("</div>");
-
 
 
         content.append(
