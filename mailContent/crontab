@@ -1,0 +1,3 @@
+#get weather from web and send emails
+0 6 * * * /root/bin/weather.sh &>> /root/java_pro/weather/log
+0 18 * * * /root/bin/weather.sh &>> /root/java_pro/weather/log
