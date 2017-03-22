@@ -30,67 +30,7 @@ public class DataHelper {
         }
     }
 
-    public static void main(String[] args) {
-        DataHelper helper = new DataHelper();
-        Map<String, String> urls = helper.getUrlsByMysql();
-        for (Map.Entry<String, String> cell : urls.entrySet()
-                ) {
-            System.out.println(cell.getKey() + " " + cell.getValue());
-        }
 
-        StringBuilder content = new StringBuilder();
-        content.append("<!doctype html>\n" +
-                "<html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\">\n" +
-                "<head>\n" +
-                "    <meta charset=\"UTF-8\">\n" +
-                "    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n" +
-                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
-                "    <title>Title</title>\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "    <center>\n" +
-                "        <table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" height=\"100%\" width=\"450px\" id=\"bodyTable\">\n" +
-                "            <tbody>\n" +
-                "                <tr>\n" +
-                "                    <td align=\"center\" valign=\"top\"  id=\"bodyCell\">\n" +
-                "                        <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" class=\"templateContainer\" style=\"max-width:450px\">\n" +
-                "                            <tbody class=\"mcnTextBlockOuter\">\n" +
-                "\n" +
-                "\n" +
-                "                            <!-- header begin -->\n" +
-                "                            <tr bgcolor=\"#1a8556\">\n" +
-                "                                <td valign=\"top\" class=\"mcnTextBlockInner\" style=\"padding-top:9px;\"></td>\n" +
-                "                                <table bgcolor=\"#1a8556\" align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"text-align: center; max-width:450px; min-width:450px;\" width=\"100%\" class=\"mcnTextContentContainer\">\n" +
-                "                                    <tbody><tr>\n" +
-                "\n" +
-                "                                        <td valign=\"top\" class=\"mcnTextContent\" style=\"padding-top:0; padding-right:18px; padding-bottom:9px; padding-left:18px;\">\n" +
-                "\n" +
-                "                                            <h1 style=\"font-family:Courier New;color: antiquewhite\">" + "title" + "</h1>\n" +
-                "                                            <h4 style=\"font-family:Courier New;color: antiquewhite\">love my love</h4>\n" +
-                "\n" +
-                "                                    </tr>\n" +
-                "                                    </tbody></table>\n" +
-                "                            </tr>\n" +
-                "                            <!-- header end-->\n" +
-                "\n" +
-                "                            <!--body begin -->\n" +
-                "                            <tr>\n" +
-                "                                <td valign=\"top\" id=\"templateBody\" bgcolor=\"#d8bfd8\" width=\"450px\" style=\" max-width:450px; min-width:450px;\">\n" +
-                "                                    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" class=\"mcnTextBlock\" style=\"max-width:450px; min-width:450px;\">\n" +
-                "                                        <tbody class=\"mcnTextBlockOuter\">\n" +
-                "                                            <tr>\n" +
-                "                                                <td valign=\"top\" class=\"mcnTextBlockInner\" style=\"padding-top:9px;\">\n" +
-                "                                                    <table align=\"left\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" width=\"100%\" style=\"width:100%;height: 360px\">\n" +
-                "                                                        <tr>\n" +
-                "                                                            <td valign=\"top\"  style=\"width:450px;\"><![endif]-->\n" +
-                "                                                                 <table align=\"center\"    border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"max-width:100%; min-width:100%;\" width=\"100%\" class=\"mcnTextContentContainer\">\n" +
-                "                                                                    <tbody>\n" +
-                "                                                                         <tr >\n" +
-                "                                                                            <td  valign=\"top\" class=\"mcnTextContent\" style=\"padding-top:40px; padding-right:18px; padding-bottom:9px; padding-left:18px;\">\n");
-
-
-        helper.saveMailContent("ceshi", "1293181335@qq.com", content.toString(), true, "asddddddddddddddddddddddd");
-    }
 
     public Map<String, String> getUrlsByMysql() {
         Map<String, String> urls = new HashMap<String, String>();
@@ -154,6 +94,27 @@ public class DataHelper {
             resultSet.close();
             statement.close();
             return mailMessageVO;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Map<String, String> getDailyWeatherEmails() {
+        String sql = "SELECT * FROM emails";
+        Map<String, String> emailThemeMap = new HashMap<>();
+
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                String emailAddr = resultSet.getString(2);
+                String theme = resultSet.getString(3);
+                emailThemeMap.put(emailAddr, theme);
+            }
+            resultSet.close();
+            statement.close();
+            return emailThemeMap;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

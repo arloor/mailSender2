@@ -1,0 +1,36 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="mailContent:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/mailContent_jar</output-path>
+    <root id="archive" name="mailContent.jar">
+      <element id="module-output" name="mailContent" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/el-api.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/jasper.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/jsp-api.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/catalina.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/ecj-4.6.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/jasper-el.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/jaspic-api.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/tomcat-api.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/tomcat-jni.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/catalina-ha.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/servlet-api.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/tomcat-dbcp.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/tomcat-jdbc.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/tomcat-util.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/catalina-ant.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/tomcat-coyote.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/websocket-api.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/tomcat-i18n-es.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/tomcat-i18n-fr.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/tomcat-i18n-ja.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/annotations-api.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/catalina-tribes.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/tomcat-util-scan.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/tomcat-websocket.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="D:/Apache Software Foundation/Tomcat 8.5/lib/catalina-storeconfig.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/mailContent/web/WEB-INF/lib/mail-1.4.7.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/mailContent/web/WEB-INF/lib/jsoup-1.10.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/mailContent/web/WEB-INF/lib/mysql-connector-java-5.1.41-bin.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
