@@ -87,8 +87,8 @@
         <label>选择操作</label><br>
         <div class="form-group" style="width: 70%;margin: auto">
           <input type="radio" name="action" value="save"><label>保存</label>
-          <input type="radio" name="action" value="send" checked><label>发送</label>
-          <input type="radio" name="action" value="savesend"><label>保存并发送</label><br>
+          <input type="radio" name="action" value="send"><label>发送</label>
+          <input type="radio" name="action" value="savesend" checked><label>保存并发送</label><br>
           <input type="radio" name="action" value="viewlast"><label>查看上一版本</label>
           <input type="radio" name="action" value="sendlast"><label>发送上一版本</label>
         </div>
