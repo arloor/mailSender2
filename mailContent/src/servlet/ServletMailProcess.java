@@ -42,7 +42,10 @@ public class ServletMailProcess extends HttpServlet {
 
         ArrayList<String> contentList = new ArrayList<>();
         for (int i = 0; i < contentNum; i++) {
-            contentList.add(request.getParameter("content" + i));
+            String content = request.getParameter("content" + i);
+            if (content != null && !content.equals("") && !content.equals("<h>")) {
+                contentList.add(content);
+            }
         }
 
         String content = createHtmlEmailContent(title, boolWithWeather, contentList);
