@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-  <title>发送邮件-jsp练手</title>
+  <title>发送邮件-jsp和js练手</title>
 
   <!-- Bootstrap -->
   <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -54,9 +54,20 @@
       <form class="form-horizontal" method="post" action="/mail/MailProcess">
 
 
+        <!--js生成内容元素的地方-->
         <div class="form-group" class="row">
           <div class="col-md-12" id="content">
           </div>
+        </div>
+
+        <!--是否显示天气-->
+        <label>显示天气</label>
+        <br>
+        <div class="col-md-6 col-xs-6">
+          <input type="radio" name="withWeather" value="yes" checked><label>显示天气</label>
+        </div>
+        <div class="col-md-6  col-xs-6 ">
+          <input type="radio" name="withWeather" value="no"><label>不显示天气</label>
         </div>
 
         <h2>设置邮件信息</h2>
@@ -66,32 +77,29 @@
         <label for="title">标题</label>
         <input id="title" name="title" type="text" class="form-control">
 
-        <div class="col-md-6 col-xs-6">
-          <input type="radio" name="withWeather" value="yes" checked>显示天气
-        </div>
-        <div class="col-md-6  col-xs-6 ">
-          <input type="radio" name="withWeather" value="no">不显示天气
-        </div>
+
 
         <label class="col-xs-3 col-md-3" style="padding-left: 0px">内容个数</label>
         <input class="col-xs-9 col-md-9" id="numOfCon" name="num" style="padding-left: 0px; padding-right: 0px"
                value="0" readonly>
 
 
-        <input type="radio" name="action" value="save" checked>保存
-        <input type="radio" name="action" value="send">发送
-        <input type="radio" name="action" value="savesend">保存并发送
-        <input type="radio" name="action" value="viewlast">查看上一版本
-        <input type="radio" name="action" value="sendlast">发送上一版本
-
-
+        <label>选择操作</label><br>
+        <div class="form-group" style="width: 70%;margin: auto">
+          <input type="radio" name="action" value="save"><label>保存</label>
+          <input type="radio" name="action" value="send" checked><label>发送</label>
+          <input type="radio" name="action" value="savesend"><label>保存并发送</label><br>
+          <input type="radio" name="action" value="viewlast"><label>查看上一版本</label>
+          <input type="radio" name="action" value="sendlast"><label>发送上一版本</label>
+        </div>
+        <br>
         <input type="submit" value="确定" class="form-control">
       </form>
 
     </div>
   </div>
 </div>
-
+<br>
 <script>
     var num = 0;
     function addTitle() {
@@ -117,6 +125,9 @@
         document.getElementById("numOfCon").value = num;
     }
 
+    addTitle();
+    addP();
+    addImg();
 </script>
 
 
